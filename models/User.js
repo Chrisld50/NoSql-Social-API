@@ -15,11 +15,14 @@ const userSchema = new Schema(
       unique: true, 
       match: [/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/, 'Please use a valid email adress.']
     },
-    thoughts: {
-      type: String,
+    thoughts:[ 
+    {
+      type: Schema.Types.ObjectId,
       required: true,
       max_length: 50,
+      ref:'Thought'
     },
+  ],
     friends: [
         { 
             type: Schema.Types.ObjectId,
@@ -29,7 +32,7 @@ const userSchema = new Schema(
   },
   {
     toJSON: {
-      getters: true,
+      virtuals: true,
     },
   }
 );
@@ -38,6 +41,6 @@ userSchema.virtual('friendCount').get(function () {
     return this.friends.length;
   });
 
-const User = model('student', userSchema);
+const User = model('User', userSchema);
 
 module.exports = User;
