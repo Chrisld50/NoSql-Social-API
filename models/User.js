@@ -18,8 +18,6 @@ const userSchema = new Schema(
     thoughts:[ 
     {
       type: Schema.Types.ObjectId,
-      required: true,
-      max_length: 50,
       ref:'Thought'
     },
   ],

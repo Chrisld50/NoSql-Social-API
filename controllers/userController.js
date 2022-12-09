@@ -1,5 +1,5 @@
 //const { ObjectId } = require('mongoose').Types;
-const { User } = require('../models');
+const { User, Thought } = require('../models');
 
 
 module.exports = {
@@ -61,27 +61,9 @@ module.exports = {
 
 
   deleteUser(req, res) {
-    User.findOneAndRemove({ _id: req.params.userId })
-      .then((userData) =>
-        !userData
-          ? res.status(404).json({ message: 'No such user exists' })
-          : Thought.findOneAndUpdate(
-              { users: req.params.usersId },
-              { $pull: { user: req.params.userId } },
-              { new: true }
-            )
-      )
-      .then((userData) =>
-        !userData
-          ? res.status(404).json({
-              message: 'User deleted, but no thoughts found',
-            })
-          : res.json({ message: 'User successfully deleted' })
-      )
-      .catch((err) => {
-        console.log(err);
-        res.status(500).json(err);
-      });
+    User.findOneAndRemove({ _id: req.params.Id })
+      .then((userData) => res.json(userData))
+      .catch((err) => res.status(500).json(err));
   },
 
   addToFriendList(req, res) {
@@ -100,7 +82,7 @@ module.exports = {
   removeFromFriendList(req, res) {
     User.findOneAndUpdate(
       {_id: req.params.userId},
-      {$addToSet: {friends: req.params.friendId}},
+      {$pull: {friends: req.params.friendId}},
       {runValidators: true, new: true}
     )
     .then((userData) =>

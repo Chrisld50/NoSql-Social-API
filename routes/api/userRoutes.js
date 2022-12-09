@@ -27,7 +27,7 @@ router
 .route('/:userId/friends/:friendId')
 .post(addToFriendList);
 
-
+// /api/users/:user/friends/friendId
 router
 .route('/:userId/friends/:friendId')
 .delete(removeFromFriendList);

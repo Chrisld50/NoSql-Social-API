@@ -7,10 +7,9 @@ const reactionSchema = new Schema(
       type: Schema.Types.ObjectId,
       default: () => new Types.ObjectId(),
     },
-    reationBody: {
+    reactionBody: {
       type: String,
       required: true,
-      min_length: 1,
       max_length: 280,
     },
     username: {
@@ -23,12 +22,6 @@ const reactionSchema = new Schema(
       get: dateStamp => moment(dateStamp).format('MMM DD, YYYY [at] hh:mm a')
     },
   },
-  {
-    toJSON: {
-      getters: true,
-    },
-    id: false,
-  }
 );
 
 module.exports = reactionSchema;
