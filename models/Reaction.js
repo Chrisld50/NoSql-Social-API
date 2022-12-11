@@ -1,7 +1,7 @@
 const moment = require('moment/moment');
 const { Schema, Types } = require('mongoose');
 
-const reactionSchema = new Schema(
+const reactionSchema = new Schema(  //creating our reaction Schema with the information that will be used for reactions. 
   {
     reactionId: {
       type: Schema.Types.ObjectId,
@@ -19,7 +19,7 @@ const reactionSchema = new Schema(
     createdAt: {
       type: Date,
       default: Date.now,
-      get: dateStamp => moment(dateStamp).format('MMM DD, YYYY [at] hh:mm a')
+      get: dateStamp => moment(dateStamp).format('MMM DD, YYYY [at] hh:mm a')  //using moment for timestamping each reaction. 
     },
   },
 );

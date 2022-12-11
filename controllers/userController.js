@@ -1,10 +1,9 @@
-//const { ObjectId } = require('mongoose').Types;
-const { User, Thought } = require('../models');
+const { User } = require('../models'); // Here we call our User model. 
 
 
-module.exports = {
+module.exports = {  // here we use the routes we created for User.
 
-  getUsers(req, res) {
+  getUsers(req, res) { // This is to get all users.
     User.find({})
       .select("-__v")
       .then(userData => res.json(userData))
@@ -14,7 +13,7 @@ module.exports = {
       })
   },
 
-  getSingleUser(req, res) {
+  getSingleUser(req, res) { // This is to get a single user. 
     User.findOne({ _id: req.params.userId})
       .select('-__v')
       .lean()
@@ -29,13 +28,13 @@ module.exports = {
       });
   },
 
-  createUser(req, res) {
+  createUser(req, res) { // This is used to create a user. 
     User.create(req.body)
       .then((userData) => res.json(userData))
       .catch((err) => res.status(500).json(err));
   },
 
-  updateUser(req, res) {
+  updateUser(req, res) { // This is to update a user. 
     User.findOneAndUpdate(
       { _id: req.params.userId },
       req.body ,
@@ -56,13 +55,13 @@ module.exports = {
   },
 
 
-  deleteUser(req, res) {
-    User.findOneAndRemove({ _id: req.params.Id })
+  deleteUser(req, res) { // This is to delete a user. 
+    User.findOneAndRemove({ _id: req.params.userId })
       .then((userData) => res.json(userData))
       .catch((err) => res.status(500).json(err));
   },
 
-  addToFriendList(req, res) {
+  addToFriendList(req, res) { // This is to add a user to another users friend. 
     User.findOneAndUpdate(
       {_id: req.params.userId},
       {$addToSet: {friends: req.params.friendId}},
@@ -75,7 +74,7 @@ module.exports = {
     })
   },
 
-  removeFromFriendList(req, res) {
+  removeFromFriendList(req, res) { // This is to remove another user from friendlist. 
     User.findOneAndUpdate(
       {_id: req.params.userId},
       {$pull: {friends: req.params.friendId}},

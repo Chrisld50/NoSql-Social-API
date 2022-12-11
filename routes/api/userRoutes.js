@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const {
+const {  // here are all of the user and friend routes that we will be calling in our controller.
   getUsers,
   getSingleUser,
   updateUser,
@@ -9,6 +9,7 @@ const {
   removeFromFriendList,
 } = require('../../controllers/userController');
 
+// /users
 
 router
 .route('/')
