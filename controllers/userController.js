@@ -36,23 +36,19 @@ module.exports = {
   },
 
   updateUser(req, res) {
-    User.findOneAndRemove({ _id: req.params.userId })
-      .then((userData) =>
-        !userData
-          ? res.status(404).json({ message: 'No such user exists' })
-          : Thought.findOneAndUpdate(
-              { users: req.params.usersId },
-              { $pull: { user: req.params.userId } },
-              { new: true }
-            )
-      )
-      .then((userData) =>
-        !userData
-          ? res.status(404).json({
-              message: 'User deleted, but no thoughts found',
-            })
-          : res.json({ message: 'User successfully deleted' })
-      )
+    User.findOneAndUpdate(
+      { _id: req.params.userId },
+      req.body ,
+      { runValidators: true, new: true }
+    )
+      .then(userData => {
+        if(!userData) {
+          res.status(404).json({message: 'User not found!'})
+          return;
+        }
+        res.json(userData)
+      })
+      
       .catch((err) => {
         console.log(err);
         res.status(500).json(err);
